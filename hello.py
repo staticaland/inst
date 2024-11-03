@@ -1,27 +1,20 @@
-"""GitHub Issue Creator with AI-Generated Content
-
-This module provides functionality to create GitHub issues using AI-generated content.
-It uses OpenAI's GPT model to generate issue titles, descriptions, and labels based
-on user input, then creates the issue in a specified GitHub repository after user
-confirmation.
+"""GitHub Issue Creator with AI-Generated Content and Supabase Storage
+This module provides functionality to create GitHub issues using AI-generated content
+and stores them in a Supabase database for tracking purposes.
 
 Dependencies:
     - instructor: For structured OpenAI API responses
     - PyGithub: For GitHub API integration
     - openai: For accessing OpenAI's API
     - pydantic: For data validation
-
+    - supabase: For database integration
+    
 Environment Variables Required:
     - GITHUB_TOKEN: GitHub personal access token with repo permissions
+    - SUPABASE_URL: Your Supabase project URL
+    - SUPABASE_KEY: Your Supabase service role key
 
-Usage:
-    1. Set the GITHUB_TOKEN environment variable
-    2. Run the script and provide an issue description when prompted
-    3. Review the AI-generated issue content
-    4. Confirm creation of the issue
-
-The script validates that all suggested labels exist in the target repository
-before creating the issue.
+The script validates labels and stores issue data in both GitHub and Supabase.
 """
 
 import os
