@@ -2,6 +2,8 @@
 
 ```sh
 export GITHUB_TOKEN=$(gh auth token)
+export SUPABASE_URL="url"
+export SUPABASE_KEY="key"
 uv run hello.py
 ```
 
