@@ -42,9 +42,7 @@ g = Github(auth=auth)
 
 repo = g.get_repo("staticaland/daggers")
 
-labels = repo.get_labels()
-
-valid_labels = {label.name for label in labels}
+valid_labels = {label.name for label in repo.get_labels()}
 
 
 class GitHubIssue(BaseModel):
