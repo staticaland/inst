@@ -30,6 +30,7 @@ import instructor
 from github import Auth, Github
 from openai import OpenAI
 from pydantic import BaseModel, field_validator
+from supabase import Client, create_client
 
 SYSTEM_PROMPT = "You create GitHub issues based on the user message."
 
@@ -82,7 +83,23 @@ print(issue.title, issue.body, issue.labels, sep="\n")
 response = input("Do you want to create the issue? (yes/no): ").strip().lower()
 
 if response == "yes":
-    repo.create_issue(title=issue.title, body=issue.body, labels=issue.labels)
+    created_issue = repo.create_issue(
+        title=issue.title, body=issue.body, labels=issue.labels
+    )
     print("Issue created successfully.")
 else:
     print("Issue creation aborted.")
+
+supabase_response = input("Do you want to log the issue in Supabase? (yes/no): ").strip().lower()
+
+if supabase_response == "yes":
+    supabase_url = os.getenv("SUPABASE_URL")
+    supabase_key = os.getenv("SUPABASE_KEY")
+    supabase: Client = create_client(supabase_url, supabase_key)
+
+    supabase.table("issues").insert(
+        {"title": issue.title, "body": issue.body, "labels": issue.labels}
+    ).execute()
+    print("Issue logged successfully in Supabase.")
+else:
+    print("Issue logging in Supabase aborted.")
